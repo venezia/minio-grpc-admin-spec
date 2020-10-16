@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option go_package = ".;v1";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "Minio Administrative API";
+        version: "v0.1.0";
+        contact: {
+            name: "Michael Venezia";
+            url: "https://github.com/venezia";
+            email: "mvenezia@gmail.com";
+        };
+    };
+    external_docs: {
+        url: "https://github.com/venezia/minio-admin-spec";
+        description: "More about Minio Administration API";
+    };
+    security: {
+        security_requirement: {
+            key: "authentication";
+            value: {
+                scope: "openid";
+                scope: "email";
+            }
+        }
+    };
+    schemes: HTTP;
+    schemes: HTTPS;
+    consumes: "application/json";
+    produces: "application/json";
+};
+
+service minioadmin {
+    // Will return version information about api server
+    rpc GetVersionInformation (GetVersionMsg) returns (GetVersionReply) {
+        option (google.api.http) = {
+            get : "/api/minioadmin/v1/version"
+        };
+    }
+}
+
+message GetVersionMsg {
+}
+
+message GetVersionReply {
+    // If operation was OK
+    bool ok = 1;
+
+    message VersionInformation {
+        // The tag on the git repository
+        string git_version = 1;
+        // The hash of the git commit
+        string git_commit = 2;
+        // Whether or not the tree was clean when built
+        string git_tree_state = 3;
+        // Date of build
+        string build_date = 4;
+        // Version of go used to compile
+        string go_version = 5;
+        // Compiler used
+        string compiler = 6;
+        // Platform it was compiled for / running on
+        string platform = 7;
+    }
+
+    // Version Information
+    VersionInformation version_information = 2;
+}
+
