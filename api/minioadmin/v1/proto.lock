@@ -1,0 +1,202 @@
+{
+  "definitions": [
+    {
+      "protopath": "api.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "GetVersionMsg"
+          },
+          {
+            "name": "GetVersionReply",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ok",
+                "type": "bool"
+              },
+              {
+                "id": 2,
+                "name": "version_information",
+                "type": "VersionInformation"
+              }
+            ],
+            "messages": [
+              {
+                "name": "VersionInformation",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "git_version",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "git_commit",
+                    "type": "string"
+                  },
+                  {
+                    "id": 3,
+                    "name": "git_tree_state",
+                    "type": "string"
+                  },
+                  {
+                    "id": 4,
+                    "name": "build_date",
+                    "type": "string"
+                  },
+                  {
+                    "id": 5,
+                    "name": "go_version",
+                    "type": "string"
+                  },
+                  {
+                    "id": 6,
+                    "name": "compiler",
+                    "type": "string"
+                  },
+                  {
+                    "id": 7,
+                    "name": "platform",
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "minioadmin",
+            "rpcs": [
+              {
+                "name": "GetVersionInformation",
+                "in_type": "GetVersionMsg",
+                "out_type": "GetVersionReply",
+                "options": [
+                  {
+                    "name": "(google.api.http)",
+                    "aggregated": [
+                      {
+                        "name": "get",
+                        "value": "/api/minioadmin/v1/version"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "google/api/annotations.proto"
+          },
+          {
+            "path": "protoc-gen-swagger/options/annotations.proto"
+          }
+        ],
+        "package": {
+          "name": "v1"
+        },
+        "options": [
+          {
+            "name": "go_package",
+            "value": ".;v1"
+          },
+          {
+            "name": "(grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger)",
+            "aggregated": [
+              {
+                "name": "info",
+                "aggregated": [
+                  {
+                    "name": "title",
+                    "value": "Minio Administrative API"
+                  },
+                  {
+                    "name": "version",
+                    "value": "v0.1.0"
+                  },
+                  {
+                    "name": "contact",
+                    "aggregated": [
+                      {
+                        "name": "name",
+                        "value": "Michael Venezia"
+                      },
+                      {
+                        "name": "url",
+                        "value": "https://github.com/venezia"
+                      },
+                      {
+                        "name": "email",
+                        "value": "mvenezia@gmail.com"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "external_docs",
+                "aggregated": [
+                  {
+                    "name": "url",
+                    "value": "https://github.com/venezia/minio-admin-spec"
+                  },
+                  {
+                    "name": "description",
+                    "value": "More about Minio Administration API"
+                  }
+                ]
+              },
+              {
+                "name": "security",
+                "aggregated": [
+                  {
+                    "name": "security_requirement",
+                    "aggregated": [
+                      {
+                        "name": "key",
+                        "value": "authentication"
+                      },
+                      {
+                        "name": "value",
+                        "aggregated": [
+                          {
+                            "name": "scope",
+                            "value": "openid"
+                          },
+                          {
+                            "name": "scope",
+                            "value": "email"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "schemes",
+                "value": "HTTP"
+              },
+              {
+                "name": "schemes",
+                "value": "HTTPS"
+              },
+              {
+                "name": "consumes",
+                "value": "application/json"
+              },
+              {
+                "name": "produces",
+                "value": "application/json"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
