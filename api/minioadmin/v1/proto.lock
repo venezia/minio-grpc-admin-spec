@@ -5,7 +5,511 @@
       "def": {
         "messages": [
           {
+            "name": "GetServerInformationMsg",
+            "fields": [
+              {
+                "id": 1,
+                "name": "endpoint",
+                "type": "Endpoint"
+              }
+            ]
+          },
+          {
+            "name": "GetServerInformationReply",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mode",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "domain",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "sqs_arn",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "deployment_id",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "buckets",
+                "type": "Buckets"
+              },
+              {
+                "id": 7,
+                "name": "objects",
+                "type": "Objects"
+              },
+              {
+                "id": 8,
+                "name": "usage",
+                "type": "Usage"
+              },
+              {
+                "id": 9,
+                "name": "services",
+                "type": "Services"
+              },
+              {
+                "id": 10,
+                "name": "fs_backend",
+                "type": "FSBackendType"
+              },
+              {
+                "id": 11,
+                "name": "erasure_backend",
+                "type": "ErasureBackendType"
+              },
+              {
+                "id": 12,
+                "name": "servers",
+                "type": "ServerProperties",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "Buckets",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "count",
+                    "type": "uint64"
+                  }
+                ]
+              },
+              {
+                "name": "Objects",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "count",
+                    "type": "uint64"
+                  }
+                ]
+              },
+              {
+                "name": "Usage",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "size",
+                    "type": "uint64"
+                  }
+                ]
+              },
+              {
+                "name": "Services",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "vault",
+                    "type": "Vault"
+                  },
+                  {
+                    "id": 2,
+                    "name": "ldap",
+                    "type": "LDAP"
+                  },
+                  {
+                    "id": 3,
+                    "name": "loggers",
+                    "type": "Logger",
+                    "is_repeated": true
+                  },
+                  {
+                    "id": 4,
+                    "name": "audits",
+                    "type": "Audit",
+                    "is_repeated": true
+                  },
+                  {
+                    "id": 5,
+                    "name": "notifications",
+                    "type": "Notifications",
+                    "is_repeated": true
+                  }
+                ],
+                "messages": [
+                  {
+                    "name": "Vault",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "status",
+                        "type": "string"
+                      },
+                      {
+                        "id": 2,
+                        "name": "encrypt",
+                        "type": "string"
+                      },
+                      {
+                        "id": 3,
+                        "name": "decrypt",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LDAP",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "status",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Logger",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "logger_map",
+                        "type": "LoggerMap",
+                        "is_repeated": true
+                      }
+                    ],
+                    "messages": [
+                      {
+                        "name": "LoggerMap",
+                        "fields": [
+                          {
+                            "id": 1,
+                            "name": "key",
+                            "type": "string"
+                          },
+                          {
+                            "id": 2,
+                            "name": "status",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Audit",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "audit_map",
+                        "type": "AuditMap",
+                        "is_repeated": true
+                      }
+                    ],
+                    "messages": [
+                      {
+                        "name": "AuditMap",
+                        "fields": [
+                          {
+                            "id": 1,
+                            "name": "key",
+                            "type": "string"
+                          },
+                          {
+                            "id": 2,
+                            "name": "status",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Notifications",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "notification_map",
+                        "type": "NotificationMap",
+                        "is_repeated": true
+                      }
+                    ],
+                    "messages": [
+                      {
+                        "name": "NotificationMap",
+                        "fields": [
+                          {
+                            "id": 1,
+                            "name": "key",
+                            "type": "string"
+                          },
+                          {
+                            "id": 2,
+                            "name": "target_id_status",
+                            "type": "TargetIDStatus",
+                            "is_repeated": true
+                          }
+                        ],
+                        "messages": [
+                          {
+                            "name": "TargetIDStatus",
+                            "fields": [
+                              {
+                                "id": 1,
+                                "name": "target_id_status_map",
+                                "type": "TargetIDStatusMap",
+                                "is_repeated": true
+                              }
+                            ],
+                            "messages": [
+                              {
+                                "name": "TargetIDStatusMap",
+                                "fields": [
+                                  {
+                                    "id": 1,
+                                    "name": "key",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "id": 2,
+                                    "name": "status",
+                                    "type": "string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "FSBackendType",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "backend_type",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "name": "ErasureBackendType",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "backend_type",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "online_disks",
+                    "type": "int32"
+                  },
+                  {
+                    "id": 3,
+                    "name": "offline_disks",
+                    "type": "int32"
+                  },
+                  {
+                    "id": 4,
+                    "name": "standard_sc_data",
+                    "type": "int32"
+                  },
+                  {
+                    "id": 5,
+                    "name": "standard_sc_parity",
+                    "type": "int32"
+                  },
+                  {
+                    "id": 6,
+                    "name": "rrsc_data",
+                    "type": "int32"
+                  },
+                  {
+                    "id": 7,
+                    "name": "rrsc_parity",
+                    "type": "int32"
+                  }
+                ]
+              },
+              {
+                "name": "ServerProperties",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "state",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "endpoint",
+                    "type": "string"
+                  },
+                  {
+                    "id": 3,
+                    "name": "uptime",
+                    "type": "int64"
+                  },
+                  {
+                    "id": 4,
+                    "name": "version",
+                    "type": "string"
+                  },
+                  {
+                    "id": 5,
+                    "name": "commit_id",
+                    "type": "string"
+                  },
+                  {
+                    "id": 6,
+                    "name": "network",
+                    "type": "Network",
+                    "is_repeated": true
+                  },
+                  {
+                    "id": 7,
+                    "name": "disks",
+                    "type": "Disk",
+                    "is_repeated": true
+                  }
+                ],
+                "messages": [
+                  {
+                    "name": "Network",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "name",
+                        "type": "string"
+                      },
+                      {
+                        "id": 2,
+                        "name": "value",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Disk",
+                    "fields": [
+                      {
+                        "id": 1,
+                        "name": "endpoint",
+                        "type": "string"
+                      },
+                      {
+                        "id": 2,
+                        "name": "root_disk",
+                        "type": "bool"
+                      },
+                      {
+                        "id": 3,
+                        "name": "drive_path",
+                        "type": "string"
+                      },
+                      {
+                        "id": 4,
+                        "name": "healing",
+                        "type": "bool"
+                      },
+                      {
+                        "id": 5,
+                        "name": "state",
+                        "type": "string"
+                      },
+                      {
+                        "id": 6,
+                        "name": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "id": 7,
+                        "name": "model",
+                        "type": "string"
+                      },
+                      {
+                        "id": 8,
+                        "name": "total_space",
+                        "type": "uint64"
+                      },
+                      {
+                        "id": 9,
+                        "name": "used_space",
+                        "type": "uint64"
+                      },
+                      {
+                        "id": 10,
+                        "name": "available_space",
+                        "type": "uint64"
+                      },
+                      {
+                        "id": 11,
+                        "name": "read_throughput",
+                        "type": "float"
+                      },
+                      {
+                        "id": 12,
+                        "name": "write_throughput",
+                        "type": "float"
+                      },
+                      {
+                        "id": 13,
+                        "name": "read_latency",
+                        "type": "float"
+                      },
+                      {
+                        "id": 14,
+                        "name": "write_latency",
+                        "type": "float"
+                      },
+                      {
+                        "id": 15,
+                        "name": "utilization",
+                        "type": "float"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "name": "GetVersionMsg"
+          },
+          {
+            "name": "Endpoint",
+            "fields": [
+              {
+                "id": 1,
+                "name": "endpoint",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "access_key_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "secret_access_key",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "ssl",
+                "type": "bool"
+              }
+            ]
           },
           {
             "name": "GetVersionReply",
@@ -80,6 +584,22 @@
                       {
                         "name": "get",
                         "value": "/api/minioadmin/v1/version"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "GetServerInformation",
+                "in_type": "GetServerInformationMsg",
+                "out_type": "GetServerInformationReply",
+                "options": [
+                  {
+                    "name": "(google.api.http)",
+                    "aggregated": [
+                      {
+                        "name": "get",
+                        "value": "/api/minioadmin/v1/server"
                       }
                     ]
                   }

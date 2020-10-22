@@ -43,9 +43,155 @@ service minioadmin {
             get : "/api/minioadmin/v1/version"
         };
     }
+    rpc GetServerInformation (GetServerInformationMsg) returns (GetServerInformationReply) {
+        option (google.api.http) = {
+            get : "/api/minioadmin/v1/server"
+        };
+    }
+}
+
+message GetServerInformationMsg {
+    Endpoint endpoint = 1;
+}
+
+message GetServerInformationReply {
+    string mode = 1;
+    repeated string domain = 2;
+    string region = 3;
+    repeated string sqs_arn = 4;
+    string deployment_id = 5;
+    Buckets buckets = 6;
+    Objects objects = 7;
+    Usage usage = 8;
+    Services services = 9;
+    oneof backend {
+        FSBackendType fs_backend = 10;
+        ErasureBackendType erasure_backend = 11;
+    }
+    repeated ServerProperties servers = 12;
+
+    message Buckets {
+        uint64 count = 1;
+    }
+
+    message Objects {
+        uint64 count = 1;
+    }
+
+    message Usage {
+        uint64 size = 1;
+    }
+
+    message Services {
+        Vault vault = 1;
+        LDAP ldap = 2;
+        repeated Logger loggers = 3;
+        repeated Audit audits = 4;
+        repeated Notifications notifications = 5;
+
+        message Vault {
+            string status = 1;
+            string encrypt = 2;
+            string decrypt = 3;
+        }
+
+        message LDAP {
+            string status = 1;
+        }
+
+        message Logger {
+            repeated LoggerMap logger_map = 1;
+
+            message LoggerMap {
+                string key = 1;
+                string status = 2;
+            }
+        }
+
+        message Audit {
+            repeated AuditMap audit_map = 1;
+
+            message AuditMap {
+                string key = 1;
+                string status = 2;
+            }
+        }
+
+        message Notifications {
+            repeated NotificationMap notification_map = 1;
+
+            message NotificationMap {
+                string key = 1;
+                repeated TargetIDStatus target_id_status = 2;
+
+                message TargetIDStatus {
+                    repeated TargetIDStatusMap target_id_status_map = 1;
+
+                    message TargetIDStatusMap {
+                        string key = 1;
+                        string status = 2;
+                    }
+                }
+            }
+        }
+    }
+
+    message FSBackendType {
+        string backend_type = 1;
+    }
+
+    message ErasureBackendType {
+        string backend_type = 1;
+        int32 online_disks = 2;
+        int32 offline_disks = 3;
+        int32 standard_sc_data = 4;
+        int32 standard_sc_parity = 5;
+        int32 rrsc_data = 6;
+        int32 rrsc_parity = 7;
+    }
+
+    message ServerProperties {
+        string state = 1;
+        string endpoint = 2;
+        int64 uptime = 3;
+        string version = 4;
+        string commit_id = 5;
+        repeated Network network = 6;
+        repeated Disk disks = 7;
+
+        message Network {
+            string name = 1;
+            string value = 2;
+        }
+
+        message Disk {
+            string endpoint = 1;
+            bool root_disk = 2;
+            string drive_path = 3;
+            bool healing = 4;
+            string state = 5;
+            string uuid = 6;
+            string model = 7;
+            uint64 total_space = 8;
+            uint64 used_space = 9;
+            uint64 available_space = 10;
+            float read_throughput = 11;
+            float write_throughput = 12;
+            float read_latency = 13;
+            float write_latency = 14;
+            float utilization = 15;
+        }
+    }
 }
 
 message GetVersionMsg {
+}
+
+message Endpoint {
+    string endpoint = 1;
+    string access_key_id = 2;
+    string secret_access_key = 3;
+    bool ssl = 4;
 }
 
 message GetVersionReply {
